@@ -8,6 +8,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Prism.Core" Version="6.3.0" />
     <PackageReference Include="TK.CustomMap" Version="2.0.0-pre1" />
+    <PackageReference Include="Wibci.LogicCommand" Version="1.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.91635" />
     <PackageReference Include="Xamarin.Forms.Maps" Version="2.5.0.91635" />
   </ItemGroup>

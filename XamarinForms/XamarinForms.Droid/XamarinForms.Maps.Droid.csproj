@@ -39,6 +39,7 @@
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -77,6 +78,9 @@
     </Reference>
     <Reference Include="TK.CustomMap.Android, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\TK.CustomMap.2.0.0-pre1\lib\MonoAndroid10\TK.CustomMap.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Wibci.LogicCommand, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Wibci.LogicCommand.1.1.0\lib\portable-net45+win8\Wibci.LogicCommand.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Arch.Core.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Android.Arch.Core.Common.1.0.0\lib\MonoAndroid80\Xamarin.Android.Arch.Core.Common.dll</HintPath>

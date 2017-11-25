@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="XamarinForms.Maps.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:localMaps="clr-namespace:XamarinForms.Maps.MapControls"
+             Title="Xamarin Forms Maps">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <localMaps:MapView Locations="{Binding Locations}" MapCenter="{Binding Location}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

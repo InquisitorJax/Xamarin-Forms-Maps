@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using Prism.Events;
+using Xamarin.Forms;
+using XamarinForms.Maps;
 
 namespace XamarinForms
 {
@@ -6,21 +8,12 @@ namespace XamarinForms
     {
         public App()
         {
+            EventMessenger = new EventAggregator();
             // The root page of your application
-            MainPage = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
+            MainPage = new NavigationPage(new MainPage());
         }
+
+        public static IEventAggregator EventMessenger { get; private set; }
 
         protected override void OnResume()
         {
