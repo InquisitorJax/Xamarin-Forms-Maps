@@ -4,9 +4,16 @@ namespace XamarinForms.Maps
 {
     public class LocationModel : BindableBase
     {
+        private string _address;
         private string _location;
 
         private string _name;
+
+        public string Address
+        {
+            get { return _address; }
+            set { SetProperty(ref _address, value); }
+        }
 
         /// <summary>
         /// Well Known Text Location

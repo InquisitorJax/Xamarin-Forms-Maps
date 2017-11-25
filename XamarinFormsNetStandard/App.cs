@@ -15,6 +15,11 @@ namespace XamarinForms
 
         public static IEventAggregator EventMessenger { get; private set; }
 
+        public static void ShowMessage(string title, string message)
+        {
+            App.Current.MainPage.DisplayAlert(title, message, "ok");
+        }
+
         protected override void OnResume()
         {
             // Handle when your app resumes

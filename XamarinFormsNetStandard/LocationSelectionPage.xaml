@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="XamarinForms.Maps.LocationSelectionPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:XamarinForms.Maps.MapControls">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackLayout>
+                    <Label Text="search address" />
+                    <Entry Text="{Binding SearchLocationText}" />
+                </StackLayout>
+                <Button Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Command="{Binding SearchLocationCommand}"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        Text="search"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
+            </Grid>
+            <ActivityIndicator Grid.RowSpan="2"
+                               HorizontalOptions="FillAndExpand"
+                               IsVisible="{Binding IsBusy}"
+                               VerticalOptions="FillAndExpand" />
+
+            <maps:TKMapView Grid.Row="1"
+                            Locations="{Binding Locations}"
+                            MapCenter="{Binding MapCenter, Mode=TwoWay}" />
+            <StackLayout Grid.Row="1"
+                         Padding="12,0,0,25"
+                         HorizontalOptions="Center"
+                         Orientation="Horizontal"
+                         VerticalOptions="End">
+                <Button BackgroundColor="White"
+                        Command="{Binding SelectLocationCommand}"
+                        HeightRequest="50"
+                        Opacity="0.7"
+                        Text="save"
+                        WidthRequest="130" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="XamarinForms.Maps.MapControls.TKMapView"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:TK.CustomMap;assembly=TK.CustomMap">
+    <ContentView.Content>
+        <!--  MapCenter missing in 2.x?  -->
+        <maps:TKCustomMap x:Name="MyMap"
+                          HorizontalOptions="FillAndExpand"
+                          IsRegionChangeAnimated="True"
+                          IsShowingUser="True"
+                          MapClickedCommand="{Binding MapClickedCommand}"
+                          MapType="Street"
+                          Pins="{Binding Pins}"
+                          SelectedPin="{Binding SelectedPin}"
+                          VerticalOptions="FillAndExpand" />
+    </ContentView.Content>
+</ContentView>

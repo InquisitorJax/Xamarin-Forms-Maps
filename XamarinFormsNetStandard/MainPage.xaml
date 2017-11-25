@@ -11,6 +11,15 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <localMaps:MapView Locations="{Binding Locations}" MapCenter="{Binding Location}" />
+            <Button Grid.Row="1"
+                    Margin="7,0,7,0"
+                    BackgroundColor="#FF3500"
+                    BorderRadius="10"
+                    Command="{Binding SelectLocationCommand}"
+                    HeightRequest="50"
+                    HorizontalOptions="Fill"
+                    Text="Select New Location"
+                    TextColor="White" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

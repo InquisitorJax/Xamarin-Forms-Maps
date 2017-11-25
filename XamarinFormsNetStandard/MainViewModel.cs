@@ -1,15 +1,16 @@
-﻿using Prism.Events;
+﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Wibci.LogicCommand;
 
 namespace XamarinForms.Maps
 {
     public class MainViewModel : BindableBase
     {
+        private readonly SubscriptionToken _locationSelectionToken;
         private GeoLocation _location;
-        private SubscriptionToken _locationSelectionToken;
-
         private LocationModel _model;
 
         public MainViewModel()
@@ -19,7 +20,8 @@ namespace XamarinForms.Maps
             Model = LocationModel.Default();
             Location = GeoLocation.FromWellKnownText(Model.Location);
 
-            //SelectLocationCommand = new DelegateCommand(SelectLocationAsync);
+            _locationSelectionToken = App.EventMessenger.GetEvent<LocationSelectionMessageEvent>().Subscribe(OnLocationSelection);
+            SelectLocationCommand = new DelegateCommand(SelectLocationAsync);
         }
 
         public GeoLocation Location
@@ -49,24 +51,20 @@ namespace XamarinForms.Maps
 
         public ICommand SelectLocationCommand { get; private set; }
 
-        //private async void SelectLocationAsync()
-        //{
-        //    //TODO ... Check: this doesn't get unsubscribed when back is pressed
-        //    _locationSelectionToken = App.EventMessenger.GetEvent<LocationSelectionMessageEvent>().Subscribe(OnLocationSelection);
+        private void OnLocationSelection(LocationSelectionResult result)
+        {
+            if (result.MessageId == Constants.Navigation.MainPage)
+            {
+                if (result.Result == TaskResult.Success)
+                {
+                    Location = result.Location;
+                }
+            }
+        }
 
-        //    await LocationHelper.SelectLocation(Location, Constants.Navigation.ServiceRequest, Model.Address);
-        //}
-
-        //private void OnLocationSelection(LocationSelectionResult result)
-        //{
-        //    if (result.MessageId == Constants.Navigation.ServiceRequest)
-        //    {
-        //        App.EventMessenger.GetEvent<LocationSelectionMessageEvent>().Unsubscribe(_locationSelectionToken);
-        //        if (result.Result == TaskResult.Success)
-        //        {
-        //            Location = result.Location;
-        //        }
-        //    }
-        //}
+        private async void SelectLocationAsync()
+        {
+            await LocationHelper.SelectLocation(Location, Constants.Navigation.MainPage, Model.Address);
+        }
     }
 }
