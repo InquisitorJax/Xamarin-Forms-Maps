@@ -19,7 +19,7 @@ namespace XamarinForms.Maps
             }
 
             var page = new LocationSelectionPage();
-            await App.Current.MainPage.Navigation.PushAsync(page);
+            await App.Current.MainPage.Navigation.PushModalAsync(page);
             await page.ViewModel.InitializeAsync(parameters);
         }
     }
