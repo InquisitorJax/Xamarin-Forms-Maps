@@ -85,7 +85,10 @@ namespace XamarinForms.Maps.MapControls
             {
                 _viewModel.AddPin(location.Latitude, location.Longitude, location.Description);
             }
-            MyMap.FitMapRegionToPositions(positions, true);
+            if (Locations.Count > 0)
+            {
+                MyMap.FitMapRegionToPositions(positions, true);
+            }
             _settingPinsFromLocations = false;
         }
 
