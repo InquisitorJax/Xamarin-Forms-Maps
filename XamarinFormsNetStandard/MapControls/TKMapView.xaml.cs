@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace XamarinForms.Maps.MapControls
@@ -79,10 +80,12 @@ namespace XamarinForms.Maps.MapControls
         {
             _settingPinsFromLocations = true;
             _viewModel.Pins.Clear();
+            var positions = Locations.Select(x => new TK.CustomMap.Position(x.Latitude, x.Longitude));
             foreach (var location in Locations)
             {
                 _viewModel.AddPin(location.Latitude, location.Longitude, location.Description);
             }
+            MyMap.FitMapRegionToPositions(positions, true);
             _settingPinsFromLocations = false;
         }
 

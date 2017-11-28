@@ -32,12 +32,12 @@
                                IsVisible="{Binding IsBusy}"
                                VerticalOptions="FillAndExpand" />
 
-            <!--<maps:TKMapView Grid.Row="1"
+            <maps:TKMapView Grid.Row="1"
                             Locations="{Binding Locations}"
-                            MapCenter="{Binding MapCenter, Mode=TwoWay}" />-->
-            <maps:MapView Grid.Row="1"
+                            MapCenter="{Binding MapCenter, Mode=TwoWay}" />
+            <!--<maps:MapView Grid.Row="1"
                           Locations="{Binding Locations}"
-                          MapCenter="{Binding MapCenter, Mode=TwoWay}" />
+                          MapCenter="{Binding MapCenter, Mode=TwoWay}" />-->
             <StackLayout Grid.Row="1"
                          Padding="12,0,0,25"
                          HorizontalOptions="Center"
