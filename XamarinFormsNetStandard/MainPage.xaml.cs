@@ -6,10 +6,13 @@ namespace XamarinForms.Maps
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
+        private MainViewModel _mainViewModel;
+
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainViewModel();
+            _mainViewModel = new MainViewModel();
+            BindingContext = _mainViewModel;
         }
     }
 }

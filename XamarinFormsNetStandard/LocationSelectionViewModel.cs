@@ -205,7 +205,7 @@ namespace XamarinForms.Maps
                 _selectionMade = true;
                 App.EventMessenger.GetEvent<LocationSelectionMessageEvent>().Publish(result);
 
-                await App.Current.MainPage.Navigation.PopModalAsync();
+                await App.Current.MainPage.Navigation.PopAsync();
             }
         }
 
