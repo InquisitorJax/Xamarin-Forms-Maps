@@ -10,8 +10,8 @@
     <PackageReference Include="TK.CustomMap" Version="2.0.1" />
     <PackageReference Include="Wibci.LogicCommand" Version="2.0.0" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
-    <PackageReference Include="Xamarin.Forms.Maps" Version="2.5.0.121934" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.550146" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="3.0.0.550146" />
   </ItemGroup>
 
 </Project>
