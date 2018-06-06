@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using TK.CustomMap;
 using Xamarin.Forms;
 
 namespace XamarinForms.Maps.MapControls
@@ -14,16 +15,28 @@ namespace XamarinForms.Maps.MapControls
         private bool _settingLocationInternal;
         private bool _settingPinsFromLocations;
         private TKMapViewModel _viewModel;
+		private bool _moveToMapCenter;
 
-        public TKMapView()
+		public TKMapView()
         {
             InitializeComponent();
             _viewModel = new TKMapViewModel();
             _viewModel.Pins.CollectionChanged += ViewModel_Pins_CollectionChanged;
             MyMap.BindingContext = _viewModel;
-        }
+			MyMap.MapReady += MyMap_MapReady;
+		}
 
-        public ObservableCollection<GeoLocation> Locations
+		private void MyMap_MapReady(object sender, System.EventArgs e)
+		{
+			//BUG: Map does not move to position when loaded
+			if (_moveToMapCenter)
+			{
+				var position = new Position(MapCenter.Latitude, MapCenter.Longitude);
+				MyMap.MoveToMapRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMiles(2))); //zoom level is lost when loaded, so re-zoom
+			}
+		}
+
+		public ObservableCollection<GeoLocation> Locations
         {
             get { return (ObservableCollection<GeoLocation>)GetValue(LocationsProperty); }
             set
@@ -59,14 +72,19 @@ namespace XamarinForms.Maps.MapControls
 
         private static void OnMapCenterChanged(BindableObject instance, object oldValue, object newValue)
         {
-            TKMapView map = (TKMapView)instance;
-            map.MapCenter = (GeoLocation)newValue;
-            if (map.MyMap.Height > 0)
-            {
-                map.InvalidateLayout(); //map will not center if it's still loading the view - call invalidate to force move after setting value
-                map.MyMap.MoveToMapRegion(TK.CustomMap.MapSpan.FromCenterAndRadius(map.MyMap.MapCenter, TK.CustomMap.Distance.FromMiles(2))); //zoom level is lost when loaded, so re-zoom
-            }
-        }
+			TKMapView map = (TKMapView)instance;
+			map.MapCenter = (GeoLocation)newValue;
+			var position = new Position(map.MapCenter.Latitude, map.MapCenter.Longitude);
+			if (map.MyMap.Height > 0)
+			{
+				map.InvalidateLayout(); //map will not center if it's still loading the view - call invalidate to force move after setting value
+				map.MyMap.MoveToMapRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMiles(2))); //zoom level is lost when loaded, so re-zoom
+			}
+			else
+			{
+				map._moveToMapCenter = true;
+			}
+		}
 
         private void Locations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -76,19 +94,39 @@ namespace XamarinForms.Maps.MapControls
             UpdatePinsFromLocations();
         }
 
-        private void UpdatePinsFromLocations()
+		public void MoveToPins()
+		{
+			if (_viewModel.Pins.Count > 0)
+			{
+				var positions = new List<Position>();
+				foreach (var pin in MyMap.Pins)
+				{
+					positions.Add(pin.Position);
+				}
+				if (positions.Count > 1)
+				{
+					MyMap.FitMapRegionToPositions(positions, true);
+				}
+				else
+				{
+					MyMap.MoveToMapRegion(MapSpan.FromCenterAndRadius(positions[0], Distance.FromMiles(2)), true);
+				}
+			}
+		}
+
+		private void UpdatePinsFromLocations()
         {
-            _settingPinsFromLocations = true;
+			_settingPinsFromLocations = true;
             _viewModel.Pins.Clear();
-            var positions = Locations.Select(x => new TK.CustomMap.Position(x.Latitude, x.Longitude));
+            //var positions = Locations.Select(x => new TK.CustomMap.Position(x.Latitude, x.Longitude));
             foreach (var location in Locations)
             {
                 _viewModel.AddPin(location.Latitude, location.Longitude, location.Description);
             }
-            if (Locations.Count > 0)
-            {
-                MyMap.FitMapRegionToPositions(positions, true);
-            }
+            //if (Locations.Count > 0)
+            //{
+            //    MyMap.FitMapRegionToPositions(positions, true);
+            //}
             _settingPinsFromLocations = false;
         }
 
